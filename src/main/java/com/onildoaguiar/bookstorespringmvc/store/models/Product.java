@@ -1,5 +1,8 @@
 package com.onildoaguiar.bookstorespringmvc.store.models;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,12 +11,15 @@ import javax.persistence.Id;
 @Entity
 public class Product {
 	
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String title;
 	private String description;
 	private int pages;
 	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ElementCollection
+	List <Price> prices;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,8 +45,16 @@ public class Product {
 	public void setPages(int pages) {
 		this.pages = pages;
 	}
+	public List<Price> getPrices() {
+		return prices;
+	}
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
+	}
+	
 	@Override
 	public String toString() {
-		return "Product [title=" + title + ", description=" + description + ", pages=" + pages + "]";
-	}
+		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", pages=" + pages
+				+ ", prices=" + prices + "]";
+	}	
 }
