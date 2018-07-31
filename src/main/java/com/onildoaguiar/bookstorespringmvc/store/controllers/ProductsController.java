@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onildoaguiar.bookstorespringmvc.store.daos.ProductDAO;
 import com.onildoaguiar.bookstorespringmvc.store.models.PriceType;
@@ -27,9 +28,10 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String add(Product product) {
+	public ModelAndView add(Product product, RedirectAttributes redirectAttributes) {
 		productDAO.save(product);
-		return "products/success";
+		redirectAttributes.addFlashAttribute("success","Product successfully registered!");
+		return new ModelAndView("redirect:products");
 	}
 
 	@RequestMapping(method=RequestMethod.GET)
