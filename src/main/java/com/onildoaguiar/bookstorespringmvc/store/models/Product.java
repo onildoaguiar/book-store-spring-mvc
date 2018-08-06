@@ -1,5 +1,6 @@
 package com.onildoaguiar.bookstorespringmvc.store.models;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Product {
@@ -16,6 +19,8 @@ public class Product {
 	private String title;
 	private String description;
 	private int pages;
+	@DateTimeFormat
+	private Calendar releaseDate;
 	
 	@ElementCollection
 	List <Price> prices;
@@ -52,9 +57,16 @@ public class Product {
 		this.prices = prices;
 	}
 	
+	public Calendar getReleaseDate() {
+		return releaseDate;
+	}
+	public void setReleaseDate(Calendar releaseDate) {
+		this.releaseDate = releaseDate;
+	}	
+	
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", pages=" + pages
 				+ ", prices=" + prices + "]";
-	}	
+	}
 }
