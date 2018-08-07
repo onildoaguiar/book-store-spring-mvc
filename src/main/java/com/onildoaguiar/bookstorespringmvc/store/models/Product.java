@@ -21,6 +21,7 @@ public class Product {
 	private int pages;
 	@DateTimeFormat
 	private Calendar releaseDate;
+	private String summaryPath;
 	
 	@ElementCollection
 	List <Price> prices;
@@ -63,6 +64,13 @@ public class Product {
 	public void setReleaseDate(Calendar releaseDate) {
 		this.releaseDate = releaseDate;
 	}	
+	
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
 	
 	@Override
 	public String toString() {

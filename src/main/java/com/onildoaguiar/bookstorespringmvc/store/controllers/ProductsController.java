@@ -11,12 +11,14 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onildoaguiar.bookstorespringmvc.store.daos.ProductDAO;
 import com.onildoaguiar.bookstorespringmvc.store.models.PriceType;
 import com.onildoaguiar.bookstorespringmvc.store.models.Product;
+import com.onildoaguiar.bookstorespringmvc.store.util.FileSaver;
 import com.onildoaguiar.bookstorespringmvc.store.validation.ProductValidation;
 
 @Controller
@@ -25,6 +27,9 @@ public class ProductsController {
 
 	@Autowired
 	private ProductDAO productDAO;
+	
+	@Autowired
+	private FileSaver fileSaver;
 
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -39,11 +44,13 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public ModelAndView add(@Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public ModelAndView add(MultipartFile summary, @Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			return form(product);
 		}
 		
+		String path = fileSaver.write("summary-files", summary);
+		product.setSummaryPath(path);
 		productDAO.save(product);
 		redirectAttributes.addFlashAttribute("success","Product successfully registered!");
 		return new ModelAndView("redirect:/products");

@@ -10,7 +10,7 @@
 <title>Books of Java, C# and more! Book Store</title>
 </head>
 <body>
-	<form:form action="${s:mvcUrl('PC#add').build()}" method="POST" commandName="product">
+	<form:form action="${s:mvcUrl('PC#add').build()}" method="POST" commandName="product" enctype="multipart/form-data">
 		<div>
 			<label>Title</label> 
 			<form:input path="title" />
@@ -38,6 +38,10 @@
 				<form:hidden path="prices[${status.index}].type" value="${priceType}" />
 			</div>
 		</c:forEach>
+		<div>
+			<label>Summary</label> 
+			<input name="summary" type="file"/>
+		</div>
 		<button type="submit">Register</button>
 	</form:form>
 </body>
